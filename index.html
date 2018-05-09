@@ -38,11 +38,20 @@
         </style>
 
         <script type="text/javascript">
-            // http://createjs.com/#!/TweenJS/demos/sparkTable
+            var story = 'The Traveler and His Dog A traveler about to set out on a journey saw his Dog stand at the door stretching himself He asked him sharply Why do you stand there gaping Everything is ready but you so come with me instantly The Dog wagging his tail replied O master I am quite ready it is you for whom I am waiting The loiterer often blames delay on his more active friend The Dog and the Shadow A Dog crossing a bridge over a stream with a piece of flesh in his mouth saw his own shadow in the water and took it for that of another Dog with a piece of meat double his own in size He immediately let go of his own and fiercely attacked the other Dog to get his larger piece from him He thus lost both that which he grasped at in the water because it was a shadow and his own because the stream swept it away The Mole and His Mother A Mole a creature blind from birth once said to his Mother I am sure than I can see Mother In the desire to prove to him his mistake his Mother placed before him a few grains of frankincense and asked What is it The young Mole said It is a pebble His Mother exclaimed My son I am afraid that you are not only blind but that you have lost your sense of smell The Herdsman and the Lost Bull A herdsman tending his flock in a forest lost a Bullcalf from the fold After a long and fruitless search he made a vow that if he could only discover the thief who had stolen the Calf he would offer a lamb in sacrifice to Hermes Pan and the Guardian Deities of the forest Not long afterwards as he ascended a small hillock he saw at its foot a Lion feeding on the Calf Terrified at the sight he lifted his eyes and his hands to heaven and said Just now I vowed to offer a lamb to the Guardian Deities of the forest if I could only find out who had robbed me but now that I have discovered the thief I would willingly add a fullgrown Bull to the Calf I have lost if I may only secure my own escape from him in safety The Hare and the Tortoise A Hare one day ridiculed the short feet and slow pace of the Tortoise who replied laughing Though you be swift as the wind I will beat you in a race The Hare believing her assertion to be simply impossible assented to the proposal and they agreed that the Fox should choose the course and fix the goal On the day appointed for the race the two started together The Tortoise never for a moment stopped but went on with a slow but steady pace straight to the end of the course The Hare lying down by the wayside fell fast asleep At last waking up and moving as fast as he could he saw the Tortoise had reached the goal and was comfortably dozing after her fatigue Slow but steady wins the race The Pomegranate AppleTree and Bramble The Pomegranate and AppleTree disputed as to which was the most beautiful When their strife was at its height a Bramble from the neighboring hedge lifted up its voice and said in a boastful tone Pray my dear friends in my presence at least cease from such vain disputings ';
+            var story_split = story.split(" ").reverse();
+            var flapFX = new Audio("./audio/flap.wav");
+            var dieFX = new Audio("./audio/die.wav");
+            var scoreFX = new Audio("./audio/score.wav");
+                
+                // http://createjs.com/#!/TweenJS/demos/sparkTable
             // http://createjs.com/Docs/TweenJS/modules/TweenJS.html
             // view-source:http://createjs.com/Demos/EaselJS/Game.html COPY THIS
             var stage, w, h, loader, pipe1height, pipe2height, pipe3height, startX, startY, wiggleDelta;
-            var background, bird, ground, pipe, bottomPipe, pipes, rotationDelta, counter, counterOutline;
+            var background, bird, ground, pipe, bottomPipe, pipes, rotationDelta, counter, counterOutline, message;
+            var play = 0;
+            var bestScore = 0;
+            var targetScore = 999;
             var started = false; 
             var startJump = false; // Has the jump started?
 
@@ -58,6 +67,8 @@
             var counterShow = false;
 
             document.onkeydown = handleKeyDown;
+
+
 
             function init() {
                 if (window.top != window) {
@@ -78,7 +89,7 @@
                 h = stage.canvas.height;
 
                 manifest = [
-                    {src:"img/bird.png", id:"bird"},
+                    {src:"img/janaface.png", id:"bird"},
                     {src:"img/background.png", id:"background"},
                     {src:"img/ground.png", id:"ground"},
                     {src:"img/pipe.png", id:"pipe"},
@@ -146,10 +157,95 @@
                 counterOutline.alpha = 0
                 stage.addChild(counter, counterOutline)
 
+
+                //JANA
+                console.log("a");
+                message = new createjs.Text(0, "30px 'Flappy Bird'", "#000000");
+                message.x = w/2
+                message.y = 100
+                message.alpha = 0
+                message.text = "text"
+                message.textAlign = 'center'
+                stage.addChild(message)
+
                 createjs.Ticker.timingMode = createjs.Ticker.RAF;
                 createjs.Ticker.addEventListener("tick", tick);
 
 
+            }
+
+            
+            function showNextMessage(){
+                message.alpha = 1
+                console.log(play);
+                if(counter.text >= targetScore){
+                    message.text = "Yay u win! :D :D :D "
+                    setTimeout(function() {
+                     message.text = "So I had this question..."
+                        setTimeout(function() {
+                            console.log("redirecting to video");
+                        }, 750);
+                    }, 1500);
+                    return;
+                }
+
+                if(play == 1) {message.text = "Those avocados have deceivingly large hitboxes"; return;}
+                else if(bestScore == 4 && play <= 5){message.text = "Hey ur pretty gude"; return;}
+                else if(play == 2){message.text = "You might want to try harder"; return;}
+                else if(play == 4){message.text = "My NaMe JaNa"; return;}
+                else if(play == 5){message.text = "and"; return;}
+                else if(play == 6){message.text = "I'm"; return;}
+                else if(play == 7){message.text = "a"; return;}
+                else if(play == 8){message.text = "really short person xd";}
+                else if(play == 9){message.text = "Thought I was gonna say prude?!"}
+                else if(play == 10){message.text = "Looks like your having some trouble"}
+                else if(play == 11){message.text = "May I sugest gitting gud?"}
+                else if(play == 12){message.text = "You've played this game 12 times already"}
+                else if(play == 13){message.text = "How have you not scored at least a " + (bestScore + 3)}
+                else if(play == 14){message.text = "How about this.";}
+                else if(play == 15){message.text = "Score " + (bestScore + 5) + " and I'll \n show you something :)"; targetScore = bestScore + 5;}
+                else if(play == 16){
+                    message.text = "While you're at it \n here's some weird music \n from this really obscure artist."; 
+                    var audio = new Audio('./audio/song.mp3');
+                    audio.play();
+                    console.log("song");
+                    audio.addEventListener("ended", function(){
+                        var a = new Audio('./audio/song2.mp3').play();
+                        
+                        console.log("song2");
+                        a.addEventListener("ended", function(){
+                            var b = new Audio("./audio/song3.mp3").play();
+                            
+                            console.log("song3");
+                            b.addEventListener("ended", function(){
+                                var c = new Audio("./audio/song4").play();
+                                
+                                console.log("song4");
+                                c.addEventListener("ended", function(){
+                                    var d = new Audio("./audio/song.mp3").play();
+                                    
+                                    console.log("song5");
+                                    d.addEventListener("ended", function(){
+                                        d.currentTime = 0;
+
+                                        console.log("loop");
+                                    });
+                                });
+                            })
+                        });
+                    });
+                }
+                else if(play == 19){message.text = "I'll read you some stories while you're at it";}
+                else if(play > 19){message.text = nextText();}
+                else if(bestScore == 0){message.text = "At least try"; return;}
+            }
+
+            function nextText(){
+               return story_split.pop() + " " + story_split.pop() + " " + story_split.pop() + " " + story_split.pop() + " " + story_split.pop() + " " + story_split.pop() + " " + story_split.pop() + " " + story_split.pop()
+            }
+
+            function hideMessage(){
+                message.alpha = 0
             }
 
             function handleKeyDown(e) {
@@ -178,6 +274,7 @@
 
             function restart() {
                 //hide anything on stage and show the score
+                hideMessage()
                 pipes.removeAllChildren();
                 createjs.Tween.get(start).to({y:start.y + 10}, 50).call(removeStart)
                 counter.text = 0
@@ -197,6 +294,12 @@
             }
 
             function die() {
+                dieFX.play();
+                play++;
+                if (counter.text > bestScore){
+                    bestScore = counter.text;
+                }
+
                 dead = true
                 bird.gotoAndPlay("dive");
                 createjs.Tween.removeTweens ( bird )
@@ -204,28 +307,21 @@
                         .call(diveBird) // change bird to diving position
                         .to({y:ground.y - 30}, (h - (bird.y+200))/1.5, createjs.Ease.linear); //drop to the bedrock
                 createjs.Tween.get(stage).to({alpha:0}, 100).to({alpha:1}, 100)
+                showNextMessage()
                 start = new createjs.Bitmap(loader.getResult("start"));
                 start.alpha = 0
                 start.x = w/2 - start.image.width/2
                 start.y = h/2 - start.image.height/2 - 150
-                share = new createjs.Bitmap(loader.getResult("share"));
-                share.alpha = 0
-                share.x = w/2 - share.image.width/2
-                share.y = h/2 - share.image.height/2 - 50
 
                 stage.addChild(start)
-                stage.addChild(share)
                 createjs.Tween.get(start).to({alpha:1, y: start.y + 50}, 400, createjs.Ease.sineIn).call(addClickToStart)
-                createjs.Tween.get(share).to({alpha:1, y: share.y + 50}, 400, createjs.Ease.sineIn).call(addClickToStart)
                 
             }
             function removeStart() {
                 stage.removeChild(start)
-                stage.removeChild(share)
             }
             function addClickToStart() {
                 start.addEventListener("click", restart);
-                share.addEventListener("click", goShare);
             }
 
             function goShare() {
@@ -235,7 +331,6 @@
                 } else {
                     countText = counter.text + " points"
                 }
-                window.open("https://twitter.com/share?url=http%3A%2F%2Fmaxmcd.com%2Ffb%2F&text=I scored " + countText +  " on HTML5 Flappy Bird.");
             }
 
             function tick(event) {
@@ -294,6 +389,7 @@
                             pipe.x = (pipe.x - deltaS*300);
                             if (pipe.x <= 338 && pipe.rotation == 0 && pipe.name != "counted") {
                                 pipe.name = "counted" //using the pipe name to count pipes
+                                scoreFX.play();
                                 counter.text = counter.text + 1
                                 counterOutline.text = counterOutline.text + 1
                             }
@@ -324,6 +420,7 @@
                     if (bird.y < -200) {
                         bird.y = -200
                     }
+                    flapFX.play();
                     createjs
                         .Tween
                         .get(bird)
