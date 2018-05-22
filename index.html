@@ -60,7 +60,7 @@
 
             var dead = false; // is the bird dead?
             var KEYCODE_SPACE = 32;     //usefull keycode
-            var gap = 250;
+            var gap = 200;
             var masterPipeDelay = 78; // delay between pipes
             var pipeDelay = masterPipeDelay; //counter used to monitor delay
 
@@ -187,19 +187,13 @@
 
                 if(play == 1) {message.text = "Those avocados have deceivingly large hitboxes"; return;}
                 else if(play == 2){message.text = "You might want to try harder"; return;}
-                else if(play == 4){message.text = "My NaMe JaNa"; return;}
-                else if(play == 5){message.text = "and"; return;}
-                else if(play == 6){message.text = "I'm"; return;}
-                else if(play == 7){message.text = "a"; return;}
-                else if(play == 8){message.text = "really short person xd";}
-                else if(play == 9){message.text = "Thought I was gonna say prude?!"}
-                else if(play == 10){message.text = "Looks like your having some \n trouble getting a score of " + (bestScore + 10)}
-                else if(play == 11){message.text = "May I sugest gitting gud?"}
-                else if(play == 12){message.text = "You've played this game 12 times already!"}
-                else if(play == 13){message.text = "How have you not scored at least a " + (bestScore + 3)}
-                else if(play == 14){message.text = "How about this.";}
-                else if(play == 15){message.text = "Score " + (bestScore + 5) + " and I'll \n show you something :)"; targetScore = bestScore + 5;}
-                else if(play == 16){
+                else if(play == 3){message.text = "May I sugest gitting gud?"}
+                else if(play == 4){message.text = "Looks like your having some \n trouble getting a score of " + (bestScore + 10)}
+                else if(play == 5){message.text = "You've played this game 5 times already!"}
+                else if(play == 6){message.text = "How have you not scored at least a " + (bestScore + 3)}
+                else if(play == 7){message.text = "How about this.";}
+                else if(play == 8){message.text = "Score " + (bestScore + 5) + " and I'll \n show you something :)"; targetScore = bestScore + 5;}
+                else if(play == 9){
                     message.text = "While you're at it \n here's some weird music \n from this really obscure artist."; 
                     var audio = new Audio('./audio/song.mp3');
                     audio.play();
@@ -230,10 +224,9 @@
                         });
                     });
                 }
-                else if (play == 17){message.text = " ";}
-                else if(play == 40){message.text = "I'll read you some stories while you're at it";}
-                else if(play > 40){message.text = nextText();}
-                else if(bestScore == 0){message.text = "At least try"; return;}
+                else if (play == 8){message.text = " "; gap = 300;}
+                else if(play == 20){message.text = "I'll read you some stories while you're at it";}
+                else if(play > 20){message.text = nextText();}
             }
 
             function nextText(){
