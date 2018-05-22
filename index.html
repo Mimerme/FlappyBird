@@ -177,10 +177,7 @@
                 if(counter.text >= targetScore){
                     message.text = "Yay u win! :D :D :D "
                     setTimeout(function() {
-                     message.text = "So I had this question..."
-                        setTimeout(function() {
-                            console.log("redirecting to video");
-                        }, 750);
+                     message.text = "Now turn to your left, I have a question..."
                     }, 1500);
                     return;
                 }
@@ -188,9 +185,9 @@
                 if(play == 1) {message.text = "Those avocados have deceivingly large hitboxes"; return;}
                 else if(play == 2){message.text = "You might want to try harder"; return;}
                 else if(play == 3){message.text = "May I sugest gitting gud?"}
-                else if(play == 4){message.text = "Looks like your having some \n trouble getting a score of " + (bestScore + 10)}
+                else if(play == 4){message.text = "Looks like your having some \n trouble getting a score higher (🚬) than " + (bestScore + 10)}
                 else if(play == 5){message.text = "You've played this game 5 times already!"}
-                else if(play == 6){message.text = "How have you not scored at least a " + (bestScore + 3)}
+                else if(play == 6){message.text = "I can see the future. And it seems like \n you'll never get good at this game."}
                 else if(play == 7){message.text = "How about this.";}
                 else if(play == 8){message.text = "Score " + (bestScore + 5) + " and I'll \n show you something :)"; targetScore = bestScore + 5;}
                 else if(play == 9){
